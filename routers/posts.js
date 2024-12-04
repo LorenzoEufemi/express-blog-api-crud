@@ -1,40 +1,24 @@
 // DATI
 const express = require("express");
 const router = express.Router();
-const myPosts = require("../data");
+const postController = require("../controllers/postcontroller");
 
 //index
-router.get("/", (req, res) => {
-    res.json(myPosts)
-});
+router.get("/", postController.index );
 
 //show
-router.get("/:id", (req, res) => {
-    const gameId = parseInt(req.params.id);
-    res.json(myPosts.find((curItem, i) => curItem.id === gameId));
-});
+router.get("/:id", postController.show );
 
 //create
-router.post("/", (req, res) => {
-    res.send("Qui aggiungo un nuovo post")
-});
+router.post("/", postController.create );
 
 //update
-router.put("/:id", (req, res) => {
-    const gameId = req.params.id;
-    res.send("Qui aggiorno dati di un post " + gameId);
-});
+router.put("/:id", postController.update );
 
 //modify
-router.patch("/:id", (req, res) => {
-    const gameId = req.params.id;
-    res.send("Qui aggiorno solo alcuni dati di un post " + gameId);
-});
+router.patch("/:id", postController.modify );
 
 //destroy
-router.delete("/:id", (req, res) => {
-    const gameId = req.params.id;
-    res.send("Qui cancello post " + gameId);
-});
+router.delete("/:id", postController.destroy );
 
 module.exports = router;
