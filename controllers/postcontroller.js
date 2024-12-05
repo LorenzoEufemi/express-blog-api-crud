@@ -5,7 +5,6 @@ const myPosts = require("../data");
 //index
 const index = (req, res) => {
 
-
     let postTosend = myPosts
     const queryString = req.query;
     if (queryString.tags !== undefined) {     //imposto map per rendere tutti i tags di Mypost minuscoli        
@@ -37,13 +36,35 @@ const show = (req, res) => {
 
 //create
 const create = (req, res) => {
-    res.send("Qui aggiungo un nuovo post")
+    const newPost = req.body;
+    
+    // const lastItemIndex = myPosts.length - 1;  //calcolo successivo id
+    // const lastItem = myPosts[lastItemIndex];
+    // const newIndex = lastItem.id + 1;
+    // newPost.id = newIndex;
+    newPost.id = myPosts[myPosts.length - 1].id + 1;
+    myPosts.push(newPost);
+    res.statusCode = 201;
+    res.json(newPost);
 };
 
 //update
 const update = (req, res) => {
-    const postId = req.params.id;
-    res.send("Qui aggiorno dati di un post " + postId);
+    const postId = parseInt(req.params.id);
+    const newData = req.body;
+    const indexToUpdate = myPosts.findIndex((curPost, i) => curPost.id === postId) //trovo index elemento da modificare
+    newData.id = postId; // aggiungo chiave id a newdata
+    if (indexToUpdate === -1) { //imposto errore
+        res.statusCode = 404;
+        res.json({
+            error: true,
+            message: "Post non trovato"
+        })
+    } else {
+        myPosts[indexToUpdate] = newData; //sostituisco elemento nella posizione di elemento da modificare con l'oggetto newdata
+        res.json(newData);
+    }
+
 };
 
 //modify

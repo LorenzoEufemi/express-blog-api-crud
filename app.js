@@ -6,7 +6,17 @@ const port = 3000;
 const gamesRouter = require("./routers/posts");
 
 // ESECUZIONE
-app.use("/posts", gamesRouter);
+
+app.use(express.json()); //body-parser
+
+app.use("/posts", gamesRouter); //includo tutte le rotte dei posts con prefisso /posts
+
+app.use(express.static("public")); //asset statici
+
+app.listen(port, () => {
+    console.log("il mio server è partito ")
+});
+
 
 // app.get( "/", (req,res) => {
 // res.send("Server del mio blog") //ritorna testo
@@ -20,8 +30,3 @@ app.use("/posts", gamesRouter);
 //     res.json(data) //ritorna un oggetto: con un array di oggetti(in cui ogni oggetto è un post) e un numero che sarebbe il numero di oggetti dell'array
 // });
 
-app.use(express.static("public"));
-
-app.listen(port, () => {
-    console.log("il mio server è partito ")
-});
