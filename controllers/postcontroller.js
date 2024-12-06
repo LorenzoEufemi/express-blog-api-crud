@@ -22,22 +22,16 @@ const index = (req, res) => {
 const show = (req, res) => {
     const postId = parseInt(req.params.id);
     const postToFind = myPosts.find((curItem, i) => curItem.id === postId)
-    if (postToFind === undefined) { //imposto errore
-        res.statusCode = 404
-        res.json({
-            error: true,
-            message: "Post non trovato"
-        })
-    } else {
-        res.json(postToFind);
-    }
+
+    res.json(postToFind);
+
 
 };
 
 //create
 const create = (req, res) => {
     const newPost = req.body;
-    
+
     // const lastItemIndex = myPosts.length - 1;  //calcolo successivo id
     // const lastItem = myPosts[lastItemIndex];
     // const newIndex = lastItem.id + 1;
@@ -54,16 +48,10 @@ const update = (req, res) => {
     const newData = req.body;
     const indexToUpdate = myPosts.findIndex((curPost, i) => curPost.id === postId) //trovo index elemento da modificare
     newData.id = postId; // aggiungo chiave id a newdata
-    if (indexToUpdate === -1) { //imposto errore
-        res.statusCode = 404;
-        res.json({
-            error: true,
-            message: "Post non trovato"
-        })
-    } else {
-        myPosts[indexToUpdate] = newData; //sostituisco elemento nella posizione di elemento da modificare con l'oggetto newdata
-        res.json(newData);
-    }
+
+    myPosts[indexToUpdate] = newData; //sostituisco elemento nella posizione di elemento da modificare con l'oggetto newdata
+    res.json(newData);
+
 
 };
 
@@ -77,17 +65,11 @@ const modify = (req, res) => {
 const destroy = (req, res) => {
     const postId = parseInt(req.params.id);
     const postIndex = myPosts.findIndex((curPost, i) => curPost.id === postId);
-    if (postIndex === -1) { //imposto errore
-        res.statusCode = 404;
-        res.json({
-            error: true,
-            message: "Post non trovato"
-        })
-    } else {
-        myPosts.splice(postIndex, 1);
-        res.sendStatus(204)
-        console.log(myPosts)
-    }
+
+    myPosts.splice(postIndex, 1);
+    res.sendStatus(204)
+    console.log(myPosts)
+
 };
 
 module.exports = {

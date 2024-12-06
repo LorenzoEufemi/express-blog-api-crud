@@ -4,6 +4,7 @@ const express = require("express");
 const app = express();
 const port = 3000;
 const gamesRouter = require("./routers/posts");
+const handleError = require("./middlewares/handleerror");
 
 // ESECUZIONE
 
@@ -12,6 +13,9 @@ app.use(express.json()); //body-parser
 app.use("/posts", gamesRouter); //includo tutte le rotte dei posts con prefisso /posts
 
 app.use(express.static("public")); //asset statici
+
+
+app.use(handleError); //handleError function
 
 app.listen(port, () => {
     console.log("il mio server è partito ")
