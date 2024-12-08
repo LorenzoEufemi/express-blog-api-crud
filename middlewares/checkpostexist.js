@@ -12,7 +12,7 @@ const checkPostExist = (req, res, next) => { //funzione controlla se è stato in
         res.statusCode = 404;
         res.json({
             error: true,
-            message: "Post non gtrovato"
+            message: "Post non trovato"
         })
     }
 };
